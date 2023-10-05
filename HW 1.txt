@@ -1,0 +1,36 @@
+-- task 1
+SELECT *
+FROM Customers
+
+-- task 2
+SELECT ContactName, City
+FROM Customers
+
+-- task 3
+SELECT OrderID,(ShippedDate - OrderDate)
+FROM Orders
+
+or 
+SELECT OrderID,DATEDIFF(day,OrderDate,ShippedDate)
+FROM Orders
+
+
+-- task 4
+SELECT DISTINCT ShipCity
+FROM Orders
+
+-- task 5
+SELECT DISTINCT ShipCity,ShipCountry
+FROM Orders
+
+-- task 6
+SELECT COUNT(DISTINCT EmployeeID)
+FROM Orders
+
+or
+SELECT COUNT(EmployeeID)
+FROM Orders
+
+-- task 7
+SELECT COUNT(DISTINCT ShipCountry)
+FROM Orders
