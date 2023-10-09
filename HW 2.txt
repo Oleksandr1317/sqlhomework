@@ -1,0 +1,29 @@
+-- Task 1
+SELECT *
+FROM Orders
+WHERE ShipCountry IN ('France','Austia','Spain');
+
+-- task 2
+SELECT *
+FROM Orders
+ORDER BY RequiredDate DESC,ShippedDate ASC; 
+
+-- task 3
+SELECT MIN(UnitPrice)
+FROM Products
+WHERE UnitsInStock > 30;
+
+-- task 4
+SELECT MAX(UnitsInStock)
+FROM Products
+WHERE UnitPrice > 30;
+
+-- TASK 5
+SELECT AVG(CAST((ShippedDate - OrderDate) AS FLOAT))
+FROM Orders
+WHERE ShipCountry = 'USA';
+
+-- TASK 6
+SELECT SUM(UnitPrice * UnitsInStock)
+FROM Products
+WHERE Discontinued <>1;
