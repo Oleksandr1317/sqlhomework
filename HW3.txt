@@ -1,0 +1,62 @@
+-- task1
+SELECT *
+FROM Orders
+WHERE ShipCountry LIKE 'U%';
+
+-- task2
+SELECT TOP(10) OrderID,CustomerID,Freight,ShipCountry
+FROM Orders
+WHERE ShipCountry LIKE 'N%'
+ORDER BY Freight DESC;
+
+-- task3
+SELECT FirstName,LastName,HomePhone,Region
+FROM Employees
+WHERE Region IS NULL;
+
+-- task4
+SELECT COUNT(CustomerID)
+FROM Customers
+WHERE Region IS NULL;
+
+-- task5
+SELECT Country,COUNT(*)
+FROM Suppliers
+GROUP BY Country
+ORDER BY COUNT(*) DESC;
+
+-- task6
+SELECT ShipCountry, SUM(Freight)
+FROM Orders
+WHERE ShipRegion IS NOT NULL
+GROUP BY ShipCountry
+HAVING SUM(Freight) > 2750
+ORDER BY SUM(Freight) DESC;
+
+-- task7
+SELECT Country
+FROM Customers
+UNION
+SELECT Country
+FROM Suppliers
+ORDER BY Country;
+
+-- task8
+SELECT Country
+FROM Customers
+INTERSECT
+SELECT Country
+FROM Suppliers
+INTERSECT
+SELECT Country
+FROM Employees;
+
+-- task9
+SELECT Country
+FROM Customers
+INTERSECT
+SELECT Country
+FROM Suppliers
+EXCEPT
+SELECT Country
+FROM Employees;
