@@ -1,0 +1,28 @@
+-- task 1
+SELECT c.CompanyName, CONCAT(e.FirstName,' ',e.LastName)
+FROM Orders AS o
+JOIN Customers AS c ON c.CustomerID = o.CustomerID
+JOIN Employees AS e ON e.EmployeeID = o.EmployeeID
+JOIN Shippers AS s ON s.ShipperID = o.ShipVia
+WHERE c.City = 'London' AND e.City = 'London' and s.CompanyName = 'Speedy Express';
+
+
+-- task 2
+SELECT ProductName,UnitsInStock,ContactName,Phone
+FROM Products AS p
+JOIN Categories AS c ON p.CategoryID = c.CategoryID
+JOIN Suppliers AS s ON p.SupplierID = s.SupplierID
+WHERE CategoryName IN ('Beverages','Seafood') AND Discontinued = 0 AND UnitsInStock < 20
+ORDER BY UnitsInStock;
+
+--task 3
+SELECT ContactName, OrderID
+FROM Customers AS c
+LEFT JOIN Orders AS o ON o.CustomerID = c.CustomerID
+WHERE OrderID IS NULL	
+
+-- task 4
+SELECT ContactName, OrderID
+FROM Orders AS o
+RIGHT JOIN Customers AS c ON o.CustomerID = c.CustomerID
+WHERE OrderID IS NULL;
