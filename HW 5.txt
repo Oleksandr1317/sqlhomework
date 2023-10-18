@@ -1,0 +1,40 @@
+--task 1
+SELECT ProductName,UnitsInStock
+FROM Products as p
+WHERE UnitsInStock < ALL(
+SELECT AVG(Quantity)
+FROM [Order Details]
+GROUP BY ProductID)
+ORDER BY UnitsInStock DESC;
+
+--task 2
+SELECT o.CustomerID,SUM(Freight) AS FreightSUM
+FROM Orders AS o
+JOIN (
+
+SELECT CustomerID, AVG(o.Freight) AS FreightAVG
+FROM Orders AS o
+GROUP BY CustomerID 
+) AS oa
+ON oa.CustomerID = o.CustomerID
+WHERE Freight > FreightAVG AND ShippedDate BETWEEN '1996-07-16'AND'1996-07-31'
+GROUP BY o.CustomerID
+ORDER BY FreightSUM;
+
+--task 3
+SELECT TOP(3) CustomerID,ShipCountry,OrderPrice
+FROM Orders as o
+Join (
+SELECT OrderID,SUM(UnitPrice*Quantity-UnitPrice*Quantity*Discount) AS OrderPrice
+FROM [Order Details] as od
+GROUP BY OrderID) as od
+ON od.OrderID = o.OrderID
+WHERE ShipCountry IN ('Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Ecuador', 'Guyana', 'Paraguay', 'Peru', 'Suriname', 'Uruguay', 'Venezuela')
+AND OrderDate >= '1997-09-01'
+ORDER BY OrderPrice DESC;
+
+--task 4
+SELECT DISTINCT ProductName
+FROM Products as p
+JOIN [Order Details] as od ON p.ProductID = od.ProductID
+WHERE Quantity = 10;

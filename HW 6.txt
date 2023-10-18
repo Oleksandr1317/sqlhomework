@@ -1,0 +1,46 @@
+1.
+CREATE TABLE Teacher
+(
+     TeacherID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	 FirstName varchar(128),
+	 LastName varchar(128),
+	 Birthday date,
+	 Phone varchar(16),
+	 Title varchar(32)
+);
+
+2.
+ALTER TABLE Teacher
+ADD MiddleName varchar(128);
+
+3.
+ALTER TABLE Teacher
+DROP COLUMN MiddleName;
+
+4.
+EXEC sp_rename 'dbo.Teacher.Birthday','BirthDate','COLUMN';
+
+5.
+ALTER TABLE Teacher ALTER COLUMN Phone varchar(32);
+
+6.
+CREATE TABLE exam
+(
+    ExamID INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	ExamName varchar(256),
+	ExamDate date
+);
+
+7.
+INSERT INTO exam
+VALUES
+('exam1','1990-12-02'),
+('exam2','1990-12-02'),
+('exam3','1990-12-02');
+
+8.
+SELECT *
+FROM exam;
+
+9.
+TRUNCATE TABLE exam; 
