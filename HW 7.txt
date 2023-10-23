@@ -1,0 +1,73 @@
+--TASK 1
+DROP TABLE IF Exists Exam;
+
+CREATE TABLE Exam 
+(
+  ExamID int IDENTITY(1,1) UNIQUE NOT NULL,
+  Name varchar(128),
+  DateExam Date
+);
+
+--TASK 2
+SELECT constraint_name
+FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE table_name = 'Exam'
+AND Table_schema = 'dbo'
+AND column_name = 'ExamID';
+
+ALTER TABLE Exam
+DROP CONSTRAINT UQ__Exam__297521A661F0FB0C;
+
+--TASK 3
+ALTER TABLE Exam
+ADD PRIMARY KEY(ExamID);
+
+--TASK 4
+DROP TABLE IF EXISTS Persone;
+
+CREATE TABLE Persone
+(
+  PersoneID int NOT NULL,
+  FirstName varchar(32) NOT NuLL,
+  LastName varchar(34) NOT NULL,
+
+  CONSTRAINT PK_Persone_PersoneID PRIMARY KEY(PersoneID)
+);
+
+--TASK 5
+CREATE TABLE Passport 
+(
+   PassportID int NOT NULL,
+   Serial_number int NOT NULL,
+   Registation varchar(32),
+   PersonID int NOT NULL,
+
+   CONSTRAINT PK_Passport_SerialNumber PRIMARY KEY(PassportID),
+   CONSTRAINT FK_Passport_Person FOREIGN KEY(PersonID) REFERENCES Person(PersonID) 
+);
+
+--TASK 6
+ALTER TABLE Book
+ADD[Weight] decimal(9,2) CONSTRAINT CHK_Book_Weight CHECK([Weight] > 0 AND [Weight] < 100);
+
+-TASK 7
+INSERT INTO Book VALUES
+('tt','tt1',1,300);
+
+--TASK 8
+DROP TABLE IF EXISTS Student
+
+CREATE TABLE Student
+(
+  StudentID int IDENTITY(1,1),
+  FullName varchar(128),
+  Grade int CONSTRAINT Default_Student_Grade DEFAULT 1
+);
+
+--TASK 9
+INSERT INTO Student VALUES
+('John',DEFAULT);
+
+--TASK 10
+ALTER TABLE Student
+DROP CONSTRAINT Default_Student_Grade;
