@@ -1,0 +1,27 @@
+--task 1
+CREATE OR ALTER VIEW View1 AS 
+SELECT OrderDate, RequiredDate, ShippedDate, ShipPostalCode, CompanyName, ContactName, Phone, LastName, FirstName, Title
+FROM Orders o
+JOIN Customers c ON o.CustomerID = c.CustomerID
+JOIN Employees e ON o.EmployeeID = e.EmployeeID;
+
+SELECT *
+FROM View1
+WHERE OrderDate > '1997-01-01';
+
+EXEC sp_rename 'dbo.View1','oce_old';
+
+DROP VIEW IF EXISTS oce_old;
+
+--TASK 2
+
+CREATE OR ALTER VIEW View2 AS
+SELECT *
+FROM Products
+WHERE Discontinued <> 0
+WITH CHECK OPTION;
+
+GO 
+
+INSERT INTO View2
+VALUES ('a',1,1,'b',15,20,15,1);
