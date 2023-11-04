@@ -1,0 +1,56 @@
+--task 1
+SELECT *
+INTO TmpOrders
+FROM Orders;
+
+--task2
+GO
+CREATE OR ALTER PROCEDURE FixOrdersShipRegion
+AS
+BEGIN
+   UPDATE TmpOrders
+   SET ShipRegion = 'unknown'
+   WHERE ShipRegion IS NULL;
+END;
+GO
+
+EXEC FixOrdersShipRegion;
+
+--task3
+GO
+CREATE OR ALTER FUNCTION SoldMoreThan(@MinSold INT)
+RETURNS TABLE
+AS
+RETURN
+	SELECT * FROM Products
+	WHERE ProductID IN (
+	SELECT ProductID FROM
+        (SELECT SUM(Quantity) AS Quantity,ProductID
+         FROM [Order Details]
+         GROUP BY ProductID
+         HAVING Sum(Quantity) > @MinSold
+        )AS FilteredOut
+		)
+GO
+
+SELECT * FROM SoldMoreThan(10)
+
+
+--task 4
+GO
+CREATE OR ALTER PROCEDURE GetOrderQuantity @ShipCountry varchar(100),
+	@MaxQuantity INT OUT
+AS 
+BEGIN 
+	SELECT @MaxQuantity = MAX(Quantity)
+	FROM Orders AS o
+	JOIN [Order Details] AS od ON o.OrderID = od.OrderID
+	WHERE ShipCountry = @ShipCountry
+END;
+
+GO
+DECLARE @MaxOrderQuantity INT;
+
+EXEC GetOrderQuantity @ShipCountry = 'USA', @MaxQuantity = @MaxOrderQuantity OUT;
+
+SELECT @MaxOrderQuantity;
